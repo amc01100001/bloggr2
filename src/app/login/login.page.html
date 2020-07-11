@@ -1,0 +1,25 @@
+<link class="stylesheet" href="app/login/login.page.scss"/>
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title color="primary">welcome back!</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list lines="full" class="ion-no-margin ion-no-padding">
+    <ion-item>
+      <ion-label position="stacked">email <ion-text color="danger">*</ion-text></ion-label>
+      <ion-input required type="email" [(ngModel)]="user.email"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">password <ion-text color="danger">*</ion-text></ion-label>
+      <ion-input required type="password" [(ngModel)]="user.password"></ion-input>
+    </ion-item>
+  </ion-list>
+  
+
+  <ion-button expand="block" (click)="login()">log in</ion-button>
+  <a routerLink="/register" routerDirection="back">need an account? register here.</a>
+</ion-content>

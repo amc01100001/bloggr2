@@ -1,5 +1,7 @@
 {
   "name": "bloggr2",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }

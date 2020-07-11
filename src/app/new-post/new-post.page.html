@@ -1,0 +1,34 @@
+<link class="stylesheet" href="app/new-post/new-post.page.scss"/>
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title color="primary">new blogg.</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-list lines="full" class="ion-no-margin ion-no-padding">
+      
+      <ion-item>
+        <ion-label position="stacked">title <ion-text color="danger">*</ion-text></ion-label>
+        <ion-input required type="text" oninput="handleFirstNameValue(event)"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">date <ion-text color="danger">*</ion-text></ion-label>
+        <ion-datetime value="2020-02-19" placeholder="Select Date"></ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">blogg. <ion-text color="danger">*</ion-text></ion-label>
+        <ion-textarea placeholder="content"></ion-textarea><br><br>
+      </ion-item>
+
+      
+
+    </ion-list>
+  </ion-card>
+  
+  <ion-button expand="block" (click)="dismiss()">cancel</ion-button>
+</ion-content>

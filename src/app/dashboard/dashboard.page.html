@@ -1,0 +1,91 @@
+<link class="stylesheet" href="app/dashboard/dashboard.page.scss"/>
+
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title color="primary">bloggr.</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+
+    <ion-row>
+      <ion-col>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-subtitle>July 8</ion-card-subtitle>
+            <ion-card-title>Wednesday</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            I was not able to finish the blog feature yesterday, I will be working on that 
+            today. // I ended up staying up all night working from a clean slate. I have 
+            learned that when it comes to coding, I have a bad habit of starting from 
+            scratch whenever I can't find a workaround to what I'm doing. A factor that 
+            plays into that is not being familiar with the programs, so seeing how Luis 
+            chose to do that before he began anything, it seems like that will be the best 
+            way for me to efficiently work on a project from now on. I feel more confident 
+            now that I took the time to look over everything one step at a time.
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-subtitle>July 7</ion-card-subtitle>
+            <ion-card-title>Tuesday</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            Today I plan on completing the “add blog” page, possibly getting the geolocation 
+            API to work. So far, I have learned that I am very bad  at concentrating when it 
+            comes to coding, but I think that derives from the same issue that for the most 
+            part, I have no idea what I'm doing. // I got caught in some errors that didn't 
+            allow my app to show when I would run "ionic serve" on the terminal. I looked all 
+            over stack overflow and it seems like I've just made the errors worse. I think 
+            from here, my best move will be to start all over. The lesson here is to not be 
+            afraid to make mistakes. The faster we get to them. the faster we'll learn from 
+            them.
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    
+    <ion-row>
+      <ion-col>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-subtitle>July 6</ion-card-subtitle>
+            <ion-card-title>Monday</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            I plan on getting the user authentication working today. I worked on it over the 
+            weekend and restarted several times.  So far, I have learned I am most productive 
+            from around 10pm to 3am. This tends to be because it is dark and quiet, so I have 
+            very little to distract me. The one thing I was stuck on throughout the weekend 
+            was connecting my app to MongoDB. I solved this by switching over to Firebase, 
+            which made my life easier. // I ended up getting the login and register pages 
+            completed with email authentication. I started the main page, but I want to make 
+            all the pages look cleaner, so I'll probably get working on that tonight.
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button color="primary">
+      <ion-icon md="caret-back" ios="chevron-back-circle-outline"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="start">
+      <ion-fab-button color="primary" routerLink="/" routerDirection="back" (click)="logout()">
+        <ion-icon name="log-out"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="primary" (click)="openModal()">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+</ion-content>

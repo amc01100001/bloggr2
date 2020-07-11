@@ -1,0 +1,30 @@
+<link class="stylesheet" href="app/register/register.page.scss"/>
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title color="primary">welcome to bloggr.</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-list lines="full" class="ion-no-margin ion-no-padding">
+
+      <ion-item>
+        <ion-label position="stacked">email <ion-text color="danger">*</ion-text></ion-label>
+        <ion-input required type="text" [(ngModel)]="user.email"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">password <ion-text color="danger">*</ion-text></ion-label>
+        <ion-input required type="password" [(ngModel)]="user.password"></ion-input>
+      </ion-item>
+
+    </ion-list>
+  
+  
+
+  <ion-button  (click)="register()" expand="block" >register</ion-button>
+  <a routerLink="/login" routerDirection="forward">already registered? log in here.</a>
+</ion-content>
+
+
