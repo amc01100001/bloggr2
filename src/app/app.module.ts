@@ -13,6 +13,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from  '@angular/fire/storage';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 var firebaseConfig = {
   apiKey: "AIzaSyAQKEojYy_FLeP0LHIppJ7ctLfXhqI3f04",
@@ -40,6 +41,7 @@ var firebaseConfig = {
   providers: [
     StatusBar,
     SplashScreen,
+    Geolocation,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

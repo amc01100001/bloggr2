@@ -8,7 +8,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 import { Observable } from 'rxjs';
-import { finalize, tap } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 
 export interface MyData {
   name: string;
