@@ -14,8 +14,6 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from  '@angular/fire/storage';
 
-import { NewPostPageModule } from './new-post/new-post.module';
-
 var firebaseConfig = {
   apiKey: "AIzaSyAQKEojYy_FLeP0LHIppJ7ctLfXhqI3f04",
   authDomain: "bloggr2.firebaseapp.com",
@@ -37,8 +35,7 @@ var firebaseConfig = {
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
     AngularFirestoreModule,
-    AngularFireStorageModule,
-    NewPostPageModule
+    AngularFireStorageModule
   ],
   providers: [
     StatusBar,

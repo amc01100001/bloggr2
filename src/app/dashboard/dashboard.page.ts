@@ -1,117 +1,134 @@
 import { Component } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { ModalController } from '@ionic/angular'; 
+import { ModalController } from '@ionic/angular';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 import { Observable } from 'rxjs';
 import { finalize, tap } from 'rxjs/operators';
-import { NewPostPage } from '../new-post/new-post.page';
 
 export interface MyData {
   name: string;
+  title: string;
+  date: string;
+  content: string;
   filepath: string;
-  size: number;
+  lat: number;
+  long: number;
 }
+
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
+  
 })
 
 export class DashboardPage {
-  task: AngularFireUploadTask; // Upload Task
+  showDetails: boolean = false;
+  hideDetails: boolean = true;
+
+  task: AngularFireUploadTask; // Upload task
   percentage: Observable<number>; // Progress in percentage
   snapshot: Observable<any>; // Snapshot of uploading file
-  UploadFileURL: Observable<string>; //Upload File URL
-  images: Observable<MyData[]>; // Upload Image List
+  UploadedFileURL: Observable<string>; //Uploaded File URL
+  
+  // Blog details:
+  fileName: string;
+  fileTitle: string;
+  fileDate: string;
+  fileContent: string;
+  fileLat: number;
+  fileLong: number;
 
-  fileName: string; // File details 
-  fileSize: number; //
+  // Status Check:
+  isUploading: boolean;
+  isUploaded: boolean;
 
-  isUploading: boolean; // Status check
-  isUploaded: boolean; //
-
-  private imageCollection: AngularFirestoreCollection<MyData>;
+  private bloggrCollection: AngularFirestoreCollection<MyData>;
+  
   constructor(
     public navCtrl: NavController,
     public fAuth: AngularFireAuth,
+    public modalController: ModalController,
     private storage: AngularFireStorage,
     private database: AngularFirestore,
-    public modalController: ModalController
+    private geolocation: Geolocation
   ) {
     this.isUploading = false;
     this.isUploaded = false;
 
-    this.imageCollection = database.collection<MyData>('bloggrImages'); // Set collection where our documents/images will save
-    this.images = this.imageCollection.valueChanges(); //
-    
+    // Set collection where the blog info will be saved
+    this.bloggrCollection = database.collection<MyData>('bloggrPosts');
   }
 
   uploadFile(event: FileList) {
-    const file = event.item(0) // The File object
 
-    if (file.type.split('/')[0] !== 'image') {
-      console.error('unsupported file type :( ')
-      return; 
-    }
+    this.geolocation.getCurrentPosition().then((resp) => {
+      this.fileLat = resp.coords.latitude;
+      this.fileLong = resp.coords.longitude;
+    }).catch((error) => {
+      alert('Error getting location.' + JSON.stringify(error));
+    })
+
+    const file = event.item(0) // The File object
 
     this.isUploading = true;
     this.isUploaded = false;
 
     this.fileName = file.name;
 
-    const path = `bloggrStorage/${new Date().getTime()}_${file.name}`; // The storage path
-    const customMetadata = { app: `bloggr.`};
+    const path = `bloggsPosts/${new Date().getTime()}_${file.name}`; // The storage path
     const fileRef = this.storage.ref(path); // File reference
-    
-    this.task = this.storage.upload(path, file, { customMetadata }); // The main task
-    this.percentage = this.task.percentageChanges(); // Get file progress percentage
-    this.snapshot = this.task.snapshotChanges().pipe( 
+    this.task = this.storage.upload(path, file); // The main task
+    this.percentage = this.task.percentageChanges(); // Get file upload progress percentage
+    this.snapshot = this.task.snapshotChanges().pipe(
       finalize(() => {
-        this.UploadFileURL = fileRef.getDownloadURL(); // Get uploaded file storage path
+        this.UploadedFileURL = fileRef.getDownloadURL(); // Get file progress percentage
 
-        this.UploadFileURL.subscribe(resp => {
-          this.addImagetoDB({
+        this.UploadedFileURL.subscribe(resp => {
+          this.addPostToDB({
+            title: this.fileTitle,
             name: file.name,
+            date: this.fileDate,
+            content: this.fileContent,
             filepath: resp,
-            size: this.fileSize
+            lat: this.fileLat,
+            long: this.fileLong
           });
           this.isUploading = false;
           this.isUploaded = true;
         }, error => {
           console.error(error);
         })
-      }),
-      tap(snap => {
-        this.fileSize = snap.totalBytes;
       })
     )
+
   }
 
-  addImagetoDB(image: MyData) {
-    const id = this.database.createId(); //Create an ID for document
-
-    this.imageCollection.doc(id).set(image).then(resp => { // Set document id with value in database
+  addPostToDB(blog: MyData) {
+    const id = this.database.createId(); // Create an ID for the post
+    
+    // Set the document ID with value in database
+    this.bloggrCollection.doc(id).set(blog).then(resp => {
       console.log(resp);
     }).catch(error => {
       console.log("error" + error);
     });
   }
 
+  toggleDetails() {
+    this.showDetails = !this.showDetails;
+    this.hideDetails = !this.hideDetails
+  }
+
   logout() {
     this.fAuth.auth.signOut();
   }
-
-  async openModal() {
-    const modal = await this.modalController.create({
-    component: NewPostPage
-    });
-    return await modal.present();
-   }
 
 
 }
